@@ -14,6 +14,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AddAlertIcon from "@mui/icons-material/AddAlert";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import BarChartIcon from "@mui/icons-material/BarChart";
+import RateReviewIcon from '@mui/icons-material/RateReview';
 // Custom components
 import MKBox from "components/MKBox";
 import MKAvatar from "components/MKAvatar";
@@ -53,7 +54,7 @@ function Dashboard() {
     //Step 4: Navigate based on tab selected
     switch (newValue) {
       case 0:
-        navigate('/profile'); // Navigate to /profile when first tab selected
+        navigate('/profile'); // Navigate to /profile when first tab selected 
         break;
         case 1:
         navigate('/createAlert'); 
@@ -110,6 +111,7 @@ function Dashboard() {
               <Tab icon={<AddAlertIcon />} label="Create Hydration Alert" />
               <Tab icon={<NotificationsActiveIcon />} label="Upcoming Alerts" />
               <Tab icon={<BarChartIcon />} label="Progress Charts" />
+              <Tab icon={<RateReviewIcon />} label="Post Testimony" />
             </Tabs>
           </Box>
           <Grid container justifyContent="center" py={6}>

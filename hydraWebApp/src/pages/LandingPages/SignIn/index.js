@@ -69,7 +69,8 @@ const handleFormChange = (event) => {
         sessionStorage.setItem("username", response.user.username);
         
         
-        navigate(from, { replace: true });
+      // Navigate to home page with userId as query parameter
+      navigate("/", { state: { userId: response.user.id, from } });
     })    
     .catch(err => {
         setErrorMsg(err.message || "An unexpected error occurred. Please try again."); // or some appropriate error message

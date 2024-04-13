@@ -14,6 +14,8 @@ import Posts from "pages/LandingPages/Author/sections/Posts";
 import Contact from "pages/LandingPages/Author/sections/Contact";
 import Footer from "pages/LandingPages/Author/sections/Footer";
 import Dashboard from "pages/LandingPages/Author/sections/UserDashBoard";
+//import UpcomingAlertsPage from "pages/WaterLogging/UpComingAlertPage";
+
 // Routes
 import routes from "routes";
 
@@ -63,6 +65,7 @@ function Author() {
         >
           <Dashboard/>
           <Posts />
+     
         </Card>
         <Contact />
        <Footer />
