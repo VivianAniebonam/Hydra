@@ -1,19 +1,55 @@
-//CONTACT SECTIONS IN ABOUT US PAGE
-
-// @mui material components
+import React, { useState } from 'react';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-
-//  React components
 import MKBox from "components/MKBox";
 import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
 import MKTypography from "components/MKTypography";
-
-// Images
 import bgImage from "assets/images/examples/blog2.jpg";
 
+
 function Contact() {
+  const [fullName, setFullName] = useState('');
+  const [title, setTitle] = useState('');
+  const [message, setMessage] = useState('');
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const [firstName, ...lastNameArray] = fullName.split(' ');
+    const payload = {
+      firstName,
+      lastName: lastNameArray.join(' '),
+      title,
+      content: message,
+    };
+
+    try {
+      const response = await fetch('http://localhost:3000/testimonies/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        alert('Testimony posted successfully: ' + responseData.message);
+        setFullName('');
+        setTitle('');
+        setMessage('');
+      } else {
+        alert('Failed to submit testimony: ' + responseData.message);
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert('An error occurred while submitting the testimony');
+    }
+  };
+
   return (
     <MKBox component="section" py={{ xs: 0, lg: 6 }}>
       <Container>
@@ -122,62 +158,72 @@ function Contact() {
                 </MKBox>
               </Grid>
               <Grid item xs={12} lg={7}>
-                <MKBox component="form" p={2} method="post">
-                  <MKBox px={3} py={{ xs: 2, sm: 6 }}>
-                    <MKTypography variant="h2" mb={1}>
-                      Make a Testimony Post
-                    </MKTypography>
-                    <MKTypography variant="body1" color="text" mb={2}>
-                      We&apos;d like you to share you experience with hydra to other user.
-                    </MKTypography>
-                  </MKBox>
-                  <MKBox pt={0.5} pb={3} px={3}>
-                    <Grid container>
-                      <Grid item xs={12} pr={1} mb={6}>
-                        <MKInput
-                          variant="standard"
-                          label="My name is"
-                          placeholder="Full Name"
-                          InputLabelProps={{ shrink: true }}
-                          fullWidth
-                        />
-                      </Grid>
-                      <Grid item xs={12} pr={1} mb={6}>
-                        <MKInput
-                          variant="standard"
-                          label="Title of your Post"
-                          placeholder="What you love"
-                          InputLabelProps={{ shrink: true }}
-                          fullWidth
-                        />
-                      </Grid>
-                      <Grid item xs={12} pr={1} mb={6}>
-                        <MKInput
-                          variant="standard"
-                          label="Your message"
-                          placeholder="I want to say that..."
-                          InputLabelProps={{ shrink: true }}
-                          fullWidth
-                          multiline
-                          rows={6}
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      xs={12}
-                      md={6}
-                      justifyContent="flex-end"
-                      textAlign="right"
-                      ml="auto"
-                    >
-                      <MKButton variant="gradient" color="info">
-                        Post Testimony
-                      </MKButton>
-                    </Grid>
-                  </MKBox>
-                </MKBox>
+                <MKBox component="form" onSubmit={handleSubmit} p={2} method="post">
+      <MKBox px={3} py={{ xs: 2, sm: 6 }}>
+        <MKTypography variant="h2" mb={1}>
+          Make a Testimony Post
+        </MKTypography>
+        <MKTypography variant="body1" color="text" mb={2}>
+          We'd like you to share your experience with hydra to other users.
+        </MKTypography>
+      </MKBox>
+      <MKBox pt={0.5} pb={3} px={3}>
+        <Grid container>
+          {/* Full Name Input */}
+          <Grid item xs={12} pr={1} mb={6}>
+            <MKInput
+              variant="standard"
+              label="My name is"
+              placeholder="Full Name"
+              InputLabelProps={{ shrink: true }}
+              fullWidth
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
+          </Grid>
+          {/* Title Input */}
+          <Grid item xs={12} pr={1} mb={6}>
+            <MKInput
+              variant="standard"
+              label="Title of your Post"
+              placeholder="What you love"
+              InputLabelProps={{ shrink: true }}
+              fullWidth
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </Grid>
+          {/* Message Input */}
+          <Grid item xs={12} pr={1} mb={6}>
+            <MKInput
+              variant="standard"
+              label="Your message"
+              placeholder="I want to say that..."
+              InputLabelProps={{ shrink: true }}
+              fullWidth
+              multiline
+              rows={6}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          item
+          xs={12}
+          md={6}
+          justifyContent="flex-end"
+          textAlign="right"
+          ml="auto"
+        >
+          {/* Submit Button */}
+          <MKButton type="submit" variant="gradient" color="info">
+            Post Testimony
+          </MKButton>
+        </Grid>
+      </MKBox>
+    </MKBox>
               </Grid>
             </Grid>
           </MKBox>
