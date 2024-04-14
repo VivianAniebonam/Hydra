@@ -164,7 +164,7 @@ function Contact() {
           Make a Testimony Post
         </MKTypography>
         <MKTypography variant="body1" color="text" mb={2}>
-          We'd like you to share your experience with hydra to other users.
+          We&apos;d like you to share your experience with hydra to other users.
         </MKTypography>
       </MKBox>
       <MKBox pt={0.5} pb={3} px={3}>
