@@ -67,9 +67,9 @@ function Team() {
             <MKBox mb={1}>
               <HorizontalTeamCard
                 image={team2}
-                name="Glenn"
+                name="Glenn Tavas"
                 position={{ color: "info", label: "UI Designer" }}
-                description="Write a brief intro. about yourself>>"
+                description="I am a Health Informatics Technology student at Centennial College, passionate about integrating technology with healthcare. I am currently enhancing my abilities in software engineering, data management, and interoperability. I aim to make a difference in healthcare by introducing innovative IT solutions."
               />
             </MKBox>
           </Grid>
