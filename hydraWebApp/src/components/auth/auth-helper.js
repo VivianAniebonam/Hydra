@@ -1,60 +1,60 @@
 import { jwtDecode } from "jwt-decode";
 
-//Saves the token and username in sessionStorage. Invokes a callback function.
-const authenticate = (token, cb)=>{
+//Saves the token and username in localStorage. Invokes a callback function.
+const authenticate = (token, cb) => {
   if (typeof window !== "undefined") {
-    sessionStorage.setItem('token', token);
+    localStorage.setItem("token", token);
 
     let decoded = jwtDecode(token);
-    sessionStorage.setItem('username', decoded.username)
+    localStorage.setItem("username", decoded.username);
   }
   cb();
-}
-//Checks if a user is authenticated based on the presence of a token in sessionStorage.
-const isAuthenticated = ()=>{
+};
+//Checks if a user is authenticated based on the presence of a token in localStorage.
+const isAuthenticated = () => {
   if (typeof window === "undefined") {
     return false;
   }
-  return !!sessionStorage.getItem('token');
-}
+  return !!localStorage.getItem("token");
+};
 
-const isAuthenticated2 = ()=>{
+const isAuthenticated2 = () => {
   if (typeof window === "undefined") {
     console.log("Window is undefined");
     return false;
   }
-  if (!sessionStorage.getItem('token')) {
+  if (!localStorage.getItem("token")) {
     console.log("Token not found");
     return false;
   }
-  const decoded = jwtDecode(sessionStorage.getItem('token'));
+  const decoded = jwtDecode(localStorage.getItem("token"));
   console.log("Decoded user:", decoded);
   return { user: decoded };
-}
+};
 
-//Retrieves the token, username from sessionStorage.
-const getToken = ()=>{
+//Retrieves the token, username from localStorage.
+const getToken = () => {
   if (typeof window === "undefined") {
     return false;
   }
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem("token");
   console.log("Retrieved token: ", token);
-  return token;
-}
+  return JSON.parse(token).token;
+};
 
-const getUsername = ()=>{
+const getUsername = () => {
   if (typeof window === "undefined") {
     return false;
   }
-  return sessionStorage.getItem('username');
-}
+  return localStorage.getItem("username");
+};
 
-//Removes the token and username from sessionStorage.
-const clearJWT = ()=>{
+//Removes the token and username from localStorage.
+const clearJWT = () => {
   if (typeof window !== "undefined") {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('username');
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
   }
-}
+};
 
-export { authenticate, isAuthenticated, isAuthenticated2, getToken, getUsername, clearJWT }
+export { authenticate, isAuthenticated, isAuthenticated2, getToken, getUsername, clearJWT };
