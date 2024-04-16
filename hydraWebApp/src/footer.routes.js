@@ -59,7 +59,7 @@ export default {
       items: [
         { name: "contact us", href: "/pages/landing-pages/contact-us" },
         { name: "knowledge center", href: "/sections/page-sections/Demonstration" },
-        { name: "FAQ"}
+        { name: "FAQ", href: "/pages/landing-pages/faq"}
       ],
     },
     {
