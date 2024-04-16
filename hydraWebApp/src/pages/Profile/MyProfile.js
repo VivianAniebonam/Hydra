@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 // MUI components
 import Container from "@mui/material/Container";
@@ -7,14 +6,14 @@ import TextField from "@mui/material/TextField";
 import Icon from "@mui/material/Icon";
 // Custom components
 import MKBox from "components/MKBox";
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from "react-router-dom"; // Import Link
 import MKAvatar from "components/MKAvatar";
 import MKTypography from "components/MKTypography";
 import MKButton from "components/MKButton";
 // Assets
 import profilePicture from "assets/images/bruce-mars.jpg";
+import { getByUserId, updateUserHandler } from "store/user-context";
 // Define your API URI
-const API_URI = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
 
 function MyProfile() {
   // State for form fields
@@ -23,39 +22,60 @@ function MyProfile() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [countryCode, setCountryCode] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState({
     street: "",
     city: "",
     country: "",
     postalCode: "",
-    state: ""
+    state: "",
   });
 
   // State to control the display of additional information
   const [showMore, setShowMore] = useState(false);
 
+  const editHandler = () => {
+    updateUserHandler(userId, {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      username: username,
+      phoneNumberFull: phoneNumber,
+      address: {
+        street: address.street,
+        city: address.city,
+        country: address.country,
+        postalCode: address.postalCode,
+        state: address.state,
+      },
+    }).then((data) => {
+      console.log("User data:", data);
+    });
+  };
 
   useEffect(() => {
-    // Simulate fetching user data - replace this with your actual fetch request
-    fetch(`${API_URI}${userId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        // Authorization header might be needed if your API requires authentication
-        'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`,
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
+    const userID = localStorage.getItem("userId");
+    const token = localStorage.getItem("authToken");
+    console.log("User ID:", userId);
+    getByUserId(userID, token)
+      .then((data) => {
+        console.log("User data:", data, userID);
         setFirstName(data.firstName);
         setLastName(data.lastName);
         setEmail(data.email);
-        setuserId(data.userId);
+        setuserId(data._id);
+        setUsername(data.username);
+        setPhoneNumber(data.phoneNumberFull);
+        setAddress({
+          street: data.address.street,
+          city: data.address.city,
+          country: data.address.country,
+          postalCode: data.address.postalCode,
+          state: data.address.state,
+        });
       })
-      .catch(error => {
-        console.error('Error fetching user data:', error);
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
       });
   }, []);
 
@@ -79,17 +99,16 @@ function MyProfile() {
           <Grid container justifyContent="center" py={6}>
             <Grid item xs={12} md={7} mx={{ xs: "auto", sm: 6, md: 1 }}>
               <MKBox display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-              <Link to="/pages/landing-pages/author" style={{ textDecoration: 'none' }}>
+                <Link to="/pages/landing-pages/author" style={{ textDecoration: "none" }}>
                   <MKButton variant="outlined" color="info" size="small">
                     <Icon sx={{ fontWeight: "bold" }}>arrow_backward</Icon> Dashboard
                   </MKButton>
                 </Link>
-                <MKTypography variant="h3">Michael Roven</MKTypography>
                 <MKTypography variant="h3">{`${firstName} ${lastName}`}</MKTypography>
-                <MKButton variant="outlined" color="info" size="small">
+                <MKButton variant="outlined" color="info" size="small" onClick={editHandler}>
                   Edit
                 </MKButton>
-               </MKBox>
+              </MKBox>
               <form>
                 <TextField
                   label="First Name"
@@ -131,17 +150,7 @@ function MyProfile() {
                       onChange={(e) => setUsername(e.target.value)}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={4}>
-                    <TextField
-                      label="Country Code"
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      value={countryCode}
-                      onChange={(e) => setCountryCode(e.target.value)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={8}>
+                  <Grid item xs={12}>
                     <TextField
                       label="Phone Number"
                       variant="outlined"
@@ -202,7 +211,6 @@ function MyProfile() {
                     />
                   </Grid>
                 </Grid>
-
               )}
               <MKTypography
                 component="button" // Change this to a button for accessibility and semantic reasons
@@ -228,9 +236,9 @@ function MyProfile() {
                   },
                 }}
               >
-                {showMore ? "Show less" : "More about me"} <Icon sx={{ fontWeight: "bold" }}>arrow_forward</Icon>
+                {showMore ? "Show less" : "More about me"}{" "}
+                <Icon sx={{ fontWeight: "bold" }}>arrow_forward</Icon>
               </MKTypography>
-
             </Grid>
           </Grid>
         </Grid>

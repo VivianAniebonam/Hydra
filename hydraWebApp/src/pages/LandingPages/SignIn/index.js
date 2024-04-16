@@ -1,7 +1,7 @@
 import { useState } from "react";
 //import { authenticate } from "components/auth/auth-helper";
-import {signin} from "store/user-context.js"
-import { useNavigate, useLocation} from "react-router-dom";
+import { signin } from "store/user-context.js";
+import { useNavigate, useLocation } from "react-router-dom";
 // react-router-dom components
 import { Link } from "react-router-dom";
 
@@ -34,7 +34,7 @@ import bgImage from "assets/images/drink.jpg";
 import { Alert } from "@mui/material";
 
 function SignInBasic() {
-   const [rememberMe, setRememberMe] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   let navigate = useNavigate();
@@ -47,36 +47,36 @@ function SignInBasic() {
     password: "",
   });
 
-       
-       
-//Handles form changes, submission, and displays error messages if sign-in fails.
-const handleFormChange = (event) => {
-  const { name, value } = event.target;
-  console.log('Form change:', name, value); // Add logging to check form change
-  setUser((prevFormData) => ({ ...prevFormData, [name]: value }));
-};
+  //Handles form changes, submission, and displays error messages if sign-in fails.
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    console.log("Form change:", name, value); // Add logging to check form change
+    setUser((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
 
   const handleSignIn = (event) => {
     event.preventDefault();
     signin(user.email, user.password)
-    .then(response => {
-      console.log("Response from server:", response);
-        if ( !response.success) {
-            throw new Error("Failed to sign in. Please try again."); // or some appropriate error message
+      .then((response) => {
+        console.log("Response from server:", response);
+        if (!response.success) {
+          throw new Error("Failed to sign in. Please try again."); // or some appropriate error message
         }
-        sessionStorage.setItem("userId", response.user.id);
-        sessionStorage.setItem("authToken", response.token);
-        sessionStorage.setItem("username", response.user.username);
-        
-        
-      // Navigate to home page with userId as query parameter
-      navigate("/", { state: { userId: response.user.id, from } });
-    })    
-    .catch(err => {
+        // sessionStorage.setItem("userId", response.user.id);
+        // sessionStorage.setItem("authToken", response.token);
+        // sessionStorage.setItem("username", response.user.username);
+        localStorage.setItem("userId", response.user.id);
+        localStorage.setItem("authToken", response.token);
+        localStorage.setItem("username", response.user.username);
+
+        // Navigate to home page with userId as query parameter
+        navigate("/", { state: { userId: response.user.id, from } });
+      })
+      .catch((err) => {
         setErrorMsg(err.message || "An unexpected error occurred. Please try again."); // or some appropriate error message
         console.error(err);
-    });
-};
+      });
+  };
 
   return (
     <>
@@ -110,8 +110,6 @@ const handleFormChange = (event) => {
         }}
       />
       <MKBox px={1} width="100%" height="100vh" mx="auto" position="relative" zIndex={2}>
-
-
         <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
           <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
             <Card>
@@ -126,7 +124,7 @@ const handleFormChange = (event) => {
                 mb={1}
                 textAlign="center"
               >
-                 {errorMsg && <div className="alert alert-danger">{errorMsg}</div>}
+                {errorMsg && <div className="alert alert-danger">{errorMsg}</div>}
                 <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
                   Sign in
                 </MKTypography>
@@ -149,13 +147,25 @@ const handleFormChange = (event) => {
                 </Grid>
               </MKBox>
               <MKBox pt={4} pb={3} px={3}>
-                {errorMsg && <Alert severity="error">{errorMsg}</Alert> }
+                {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
                 <MKBox component="form" role="form">
                   <MKBox mb={2}>
-                    <MKInput type="email" name="email" label="Email" fullWidth onChange={handleFormChange} />
+                    <MKInput
+                      type="email"
+                      name="email"
+                      label="Email"
+                      fullWidth
+                      onChange={handleFormChange}
+                    />
                   </MKBox>
                   <MKBox mb={2}>
-                    <MKInput type="password" name="password" label="Password" fullWidth onChange={handleFormChange} />
+                    <MKInput
+                      type="password"
+                      name="password"
+                      label="Password"
+                      fullWidth
+                      onChange={handleFormChange}
+                    />
                   </MKBox>
                   <MKBox display="flex" alignItems="center" ml={-1}>
                     <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -170,7 +180,12 @@ const handleFormChange = (event) => {
                     </MKTypography>
                   </MKBox>
                   <MKBox mt={4} mb={1}>
-                    <MKButton variant="gradient" color="info" fullWidth onClick={(e) => handleSignIn(e)}>
+                    <MKButton
+                      variant="gradient"
+                      color="info"
+                      fullWidth
+                      onClick={(e) => handleSignIn(e)}
+                    >
                       sign in
                     </MKButton>
                   </MKBox>
