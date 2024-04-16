@@ -13,7 +13,7 @@ import MKSocialButton from "components/MKSocialButton";
 //  React examples
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import DefaultFooter from "examples/Footers/DefaultFooter";
-import PersonIcon from '@mui/icons-material/Person';
+import PersonIcon from "@mui/icons-material/Person";
 // Presentation page sections
 import Counters from "pages/Presentation/sections/Counters";
 import Information from "pages/Presentation/sections/Information";
@@ -34,61 +34,63 @@ function Presentation() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("authToken"); 
-    const userId = sessionStorage.getItem("userId"); 
-    const username = sessionStorage.getItem("username");
+    const token = localStorage.getItem("authToken");
+    const userId = localStorage.getItem("userId");
+    const username = localStorage.getItem("username");
 
-  if (token && userId){
-    setIsLoggedIn(true);
-    console.log(isLoggedIn);
-    routes.push({
-      name: username,
-      icon:<PersonIcon />,
-      collapse: [
-        {
-          name: "Dashboard",
-          icon: "<DashboardIcon />", // Use the appropriate icon
-          href: "/pages/landing-pages/author",
-        },
-        {
-          name: "My Profile",
-          icon: "<AccountCircleIcon />", // Use the appropriate icon
-          href: "/profile",
-        },
-        {
-          name: "Logout",
-          icon: "<ExitToAppIcon />", // Use the appropriate icon
-          href: "ges/autpahentication/sign-in",  // Function to handle logout action
-        },
-        
-      ],
-    },)
-  }
+    if (token && userId) {
+      setIsLoggedIn(true);
+      console.log(isLoggedIn);
+      routes.push({
+        name: username,
+        icon: <PersonIcon />,
+        collapse: [
+          {
+            name: "Dashboard",
+            icon: "<DashboardIcon />", // Use the appropriate icon
+            href: "/pages/landing-pages/author",
+          },
+          {
+            name: "My Profile",
+            icon: "<AccountCircleIcon />", // Use the appropriate icon
+            href: "/profile",
+          },
+          {
+            name: "Logout",
+            icon: "<ExitToAppIcon />", // Use the appropriate icon
+            href: "ges/autpahentication/sign-in", // Function to handle logout action
+          },
+        ],
+      });
+    }
   }, []);
 
   const handleLogout = () => {
-    sessionStorage.removeItem("authToken")
-    sessionStorage.removeItem("userId")
-    sessionStorage.removeItem("username")
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
     setIsLoggedIn(false);
-    console.log("HANDLE LOG OUT")
-   }
+    console.log("HANDLE LOG OUT");
+  };
   return (
     <>
-   <DefaultNavbar
+      <DefaultNavbar
         routes={routes}
-        action={isLoggedIn ? {
-          type: "external",
-          handleLogout: handleLogout,
-          label: "Log Out",          
-          color: "info",
-        } :{
-          type: "external",
-          route: "/ges/autpahentication/sign-in",
-          label: "Login",          
-          color: "info",
-        }}
-
+        action={
+          isLoggedIn
+            ? {
+                type: "external",
+                handleLogout: handleLogout,
+                label: "Log Out",
+                color: "info",
+              }
+            : {
+                type: "external",
+                route: "/ges/autpahentication/sign-in",
+                label: "Login",
+                color: "info",
+              }
+        }
         sticky
       />
       <MKBox
@@ -96,7 +98,7 @@ function Presentation() {
         width="100%"
         sx={{
           backgroundImage: `url(${bgImage})`,
-         backgroundSize: "cover",
+          backgroundSize: "cover",
           backgroundPosition: "top",
           display: "grid",
           placeItems: "center",
@@ -124,14 +126,14 @@ function Presentation() {
               px={{ xs: 6, lg: 12 }}
               mt={1}
             >
-             Hydrate Smart, Live Well: Discover the Simplicity of Staying Hydrated with Hydra.
+              Hydrate Smart, Live Well: Discover the Simplicity of Staying Hydrated with Hydra.
             </MKTypography>
           </Grid>
         </Container>
       </MKBox>
       <Card
         sx={{
-          p:12 ,
+          p: 12,
           mx: { xs: 2, lg: 3 },
           mt: -8,
           mb: 4,
@@ -143,11 +145,11 @@ function Presentation() {
         <Counters />
         <Information />
         <DesignBlocks style={{ padding: 0 }} />
-        
+
         <Container sx={{ mt: 6 }}>
           <BuiltByDevelopers />
         </Container>
-               <Testimonials />
+        <Testimonials />
         <Download />
         <MKBox pt={18} pb={6}>
           <Container>

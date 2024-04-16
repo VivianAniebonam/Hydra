@@ -1,4 +1,3 @@
-
 // import React, { useState, useEffect } from "react";
 // // MUI components
 // import Container from "@mui/material/Container";
@@ -35,7 +34,6 @@
 //   // State to control the display of additional information
 //   const [showMore, setShowMore] = useState(false);
 
-
 //   useEffect(() => {
 //     // Simulate fetching user data - replace this with your actual fetch request
 //     fetch(`${API_URI}${userId}`, {
@@ -43,7 +41,7 @@
 //       headers: {
 //         'Content-Type': 'application/json',
 //         // Authorization header might be needed if your API requires authentication
-//         'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`,
+//         'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
 //       },
 //     })
 //       .then(response => response.json())

@@ -62,9 +62,9 @@ function SignInBasic() {
         if (!response.success) {
           throw new Error("Failed to sign in. Please try again."); // or some appropriate error message
         }
-        // sessionStorage.setItem("userId", response.user.id);
-        // sessionStorage.setItem("authToken", response.token);
-        // sessionStorage.setItem("username", response.user.username);
+        // localStorage.setItem("userId", response.user.id);
+        // localStorage.setItem("authToken", response.token);
+        // localStorage.setItem("username", response.user.username);
         localStorage.setItem("userId", response.user.id);
         localStorage.setItem("authToken", response.token);
         localStorage.setItem("username", response.user.username);

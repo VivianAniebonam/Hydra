@@ -32,7 +32,7 @@ const signin = async (email, password) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: token ? `Bearer ${token}` : "", // Append token if available
+        //Authorization: token ? `Bearer ${token}` : "", // Append token if available
       },
       body: JSON.stringify({ email, password }),
     });

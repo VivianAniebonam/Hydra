@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import AlertItem from './AlertItem'; // Create a separate component for displaying each alert item
+import React, { useState, useEffect } from "react";
+import AlertItem from "./AlertItem"; // Create a separate component for displaying each alert item
 
 const UpcomingAlertsPage = () => {
   const [alerts, setAlerts] = useState([]);
@@ -13,19 +13,19 @@ const UpcomingAlertsPage = () => {
     // Send a request to fetch alerts associated with the current user
     try {
       const response = await fetch(`${API_URI}/alerts`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${sessionStorage.getItem('authToken')}` // Include authorization token if required
-        }
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Include authorization token if required
+        },
       });
       if (response.ok) {
         const data = await response.json();
         setAlerts(data.alerts);
       } else {
-        console.error('Failed to fetch alerts');
+        console.error("Failed to fetch alerts");
       }
     } catch (error) {
-      console.error('Error fetching alerts:', error);
+      console.error("Error fetching alerts:", error);
     }
   };
 
@@ -38,20 +38,20 @@ const UpcomingAlertsPage = () => {
     // Send a request to delete the alert from the database
     try {
       const response = await fetch(`${API_URI}/alerts/${alertId}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'Authorization': `Bearer ${sessionStorage.getItem('authToken')}` // Include authorization token if required
-        }
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Include authorization token if required
+        },
       });
       if (response.ok) {
         // Remove the deleted alert from the alerts state
-        setAlerts(alerts.filter(alert => alert.id !== alertId));
-        console.log('Alert deleted successfully');
+        setAlerts(alerts.filter((alert) => alert.id !== alertId));
+        console.log("Alert deleted successfully");
       } else {
-        console.error('Failed to delete alert');
+        console.error("Failed to delete alert");
       }
     } catch (error) {
-      console.error('Error deleting alert:', error);
+      console.error("Error deleting alert:", error);
     }
   };
 
@@ -59,7 +59,7 @@ const UpcomingAlertsPage = () => {
     <div>
       <h1>Upcoming Alerts</h1>
       <ul>
-        {alerts.map(alert => (
+        {alerts.map((alert) => (
           <AlertItem
             key={alert.id}
             alert={alert}
