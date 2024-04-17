@@ -8,6 +8,7 @@ import SignUp from './pages/LandingPages/SignIn/signup';
 import Profile from './pages/Profile';
 import AddWaterLogForm from "pages/LandingPages/Author/sections/Posts";
 import routes from "routes";
+import FAQ from "layouts/pages/landing-pages/faq";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         {/* Add the AddWaterLogForm route here */}
         <Route path="/add-water-log" element={<AddWaterLogForm />} />
+        <Route path="/faq" component={FAQ} />
       </Routes>
     </ThemeProvider>
   );
