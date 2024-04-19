@@ -28,7 +28,7 @@ import HorizontalTeamCard from "examples/Cards/TeamCards/HorizontalTeamCard";
 import team1 from "assets/images/Screenshot 2024-03-17 162614.png";
 import team2 from "assets/images/imresizer-1710707467200.jpg";
 import team3 from "assets/images/Anas2.jpg";
-import team4 from "assets/images/ivana-square.jpg";
+import team4 from "assets/images/Mayvis_Ouaziri.jpg";
 
 function Team() {
   return (
@@ -89,7 +89,7 @@ function Team() {
                 image={team4}
                 name="Mayvis"
                 position={{ color: "info", label: "backend Developer" }}
-                description="Write a brief intro. about yourself>>"
+                description="As a backend developer, student of Health Informatics Technology, and sports advisor, I've combined my passion for technology and health to aid in the creation of this app. Remembering to drink enough water is crucial for your well-being and performance. Let this app help you stay hydrated and at your best!"
               />
             </MKBox>
           </Grid>
